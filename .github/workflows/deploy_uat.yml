@@ -1,23 +1,7 @@
-name: Run Script on Remote Server
-
-on:
-  push:
-    branches:
-      - main 
-
 jobs:
-  deploy:
+  test-ssh:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout repo
-      uses: actions/checkout@v3
-
-    - name: Run remote script via SSH
-      uses: appleboy/ssh-action@v1.0.3
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        script: |
-          bash /root/deploy_uat_branch.sh
+      - name: Test SSH Port
+        run: |
+          nc -zv 172.31.45.44 22 || echo "SSH port unreachable"
