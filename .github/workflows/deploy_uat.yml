@@ -20,4 +20,4 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         script: |
-          sudo /bin/bash /root/deploy_uat_branch.sh
+          sudo bash /root/deploy_uat_branch.sh
