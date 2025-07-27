@@ -9,4 +9,4 @@ jobs:
     steps:
       - name: Test SSH Port
         run: |
-          nc -zv your-server-ip 22 || echo "SSH port unreachable"
+          nc -zv 172.31.45.44 22 || echo "SSH port unreachable"
