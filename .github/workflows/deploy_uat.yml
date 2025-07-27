@@ -1,7 +1,12 @@
+name: Test SSH Access
+
+on:
+  workflow_dispatch:  # allows manual trigger from GitHub UI
+
 jobs:
   test-ssh:
     runs-on: ubuntu-latest
     steps:
       - name: Test SSH Port
         run: |
-          nc -zv 172.31.45.44 22 || echo "SSH port unreachable"
+          nc -zv your-server-ip 22 || echo "SSH port unreachable"
