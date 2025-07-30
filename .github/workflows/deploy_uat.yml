@@ -1,9 +1,7 @@
 name: Run Script on Remote Server
 
 on:
-  push:
-    branches:
-      - main 
+  workflow_dispatch:
 
 jobs:
   deploy:
