@@ -1,0 +1,26 @@
+name: View Logs from UAT Server
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run on'
+        required: true
+        default: 'UAT-MASTER'
+
+jobs:
+  log_watcher:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Run remote script via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.UAT_HOST }}
+          username: ${{ secrets.UAT_USER }}
+          key: ${{ secrets.UAT_PRIVATE_KEY }}
+          script: |
+            sudo bash /root/log_watcher.sh
