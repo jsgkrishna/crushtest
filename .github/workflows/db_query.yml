@@ -37,5 +37,5 @@ jobs:
             DB_USER="${{ secrets.DB_USER }}"
             DB_PASS="${{ secrets.DB_PASS }}"
             DB_NAME="${{ secrets.DB_NAME }}"
-            mysql -u$DB_USER -p$DB_PASS $DB_NAME < /tmp/sql_query.sql
+            mysql -u$DB_USER -p$DB_PASS $DB_NAME < /tmp/DB/sql_query.sql
 
