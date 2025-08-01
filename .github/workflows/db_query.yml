@@ -1,0 +1,41 @@
+name: DB Update
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run on'
+        required: true
+        default: 'UAT-MASTER'
+
+jobs:
+  deploy-and-run-sql:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout specified branch
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Copy SQL file to server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.UAT_HOST }}
+          username: ${{ secrets.UAT_USER }}
+          key: ${{ secrets.UAT_PRIVATE_KEY }}
+          source: "DB/sql_query.sql"
+          target: "/tmp"
+
+      - name: Execute SQL on server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.UAT_HOST }}
+          username: ${{ secrets.UAT_USER }}
+          key: ${{ secrets.UAT_PRIVATE_KEY }}
+          script: |
+            DB_USER="${{ secrets.DB_USER }}"
+            DB_PASS="${{ secrets.DB_PASS }}"
+            DB_NAME="${{ secrets.DB_NAME }}"
+            mysql -u$DB_USER -p$DB_PASS $DB_NAME < /tmp/sql_query.sql
+
