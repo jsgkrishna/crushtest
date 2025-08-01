@@ -21,18 +21,18 @@ jobs:
       - name: Copy SQL file to server
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: ${{ secrets.UAT_HOST }}
-          username: ${{ secrets.UAT_USER }}
-          key: ${{ secrets.UAT_PRIVATE_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           source: "DB/sql_query.sql"
           target: "/tmp"
 
       - name: Execute SQL on server
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.UAT_HOST }}
-          username: ${{ secrets.UAT_USER }}
-          key: ${{ secrets.UAT_PRIVATE_KEY }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             DB_USER="${{ secrets.DB_USER }}"
             DB_PASS="${{ secrets.DB_PASS }}"
